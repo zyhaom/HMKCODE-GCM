@@ -1,31 +1,34 @@
 package com.eventbooking.android.gcm;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import java.io.IOException;
+
 public class MainActivity extends Activity {
-    Button buttonRegId;
-    EditText editTextRegId;
+    public static final String TAG = "GCM";
 
-    GoogleCloudMessaging gcm;
+    private EditText editTextRegId;
 
-    String regId;
+    private GoogleCloudMessaging gcm;
 
-    String PROJECT_NUMBER = "393260886080";
+    private String regId;
+
+    private String PROJECT_NUMBER = "393260886080";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        buttonRegId = (Button) findViewById(R.id.buttonGetRegId);
         editTextRegId = (EditText) findViewById(R.id.editTextRegId);
     }
 
@@ -47,7 +50,37 @@ public class MainActivity extends Activity {
         return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 
-    public void onClick(View view){
+    public void onClick(View view) {
+        getRegId();
+    }
 
+    public void getRegId() {
+        new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... params) {
+                String message;
+
+                try {
+                    if (gcm == null) {
+                        gcm = GoogleCloudMessaging.getInstance(getApplicationContext());
+                    }
+
+                    regId = gcm.register(PROJECT_NUMBER);
+
+                    message = "Device registered, registration ID = " + regId;
+
+                    Log.i(TAG, message);
+                } catch (IOException ex) {
+                    message = "Error: " + ex.getMessage();
+                }
+
+                return message;
+            }
+
+            @Override
+            protected void onPostExecute(String message) {
+                editTextRegId.setText(message + "\n");
+            }
+        }.execute(null, null, null);
     }
 }
