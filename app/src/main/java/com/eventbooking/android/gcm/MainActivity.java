@@ -20,6 +20,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.IOException;
@@ -167,12 +168,18 @@ public class MainActivity extends Activity {
             @Override
             protected String doInBackground(Void... params) {
                 String message;
-                String postUrl = serverUrl + "/Device/Register/" + regId + "/" + email;
-
-                HttpClient client = new DefaultHttpClient();
-                HttpPost post = new HttpPost(postUrl);
+                String postUrl = serverUrl + "/Device/Register";
 
                 try {
+                    StringEntity registrationIdEntity = new StringEntity(regId);
+                    StringEntity emailEntity = new StringEntity(email);
+
+                    HttpClient client = new DefaultHttpClient();
+                    HttpPost post = new HttpPost(postUrl);
+
+                    post.setEntity(registrationIdEntity);
+                    post.setEntity(emailEntity);
+
                     Log.i(TAG, "Sending POST to " + postUrl);
 
                     HttpResponse response = client.execute(post);
