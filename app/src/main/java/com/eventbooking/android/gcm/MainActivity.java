@@ -24,7 +24,7 @@ public class MainActivity extends Activity {
     private EditText editTextRegId;
     private GoogleCloudMessaging gcm;
     private String regId;
-    private String PROJECT_NUMBER = "393260886080";
+    private final static String PROJECT_NUMBER = "393260886080";
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private Context context;
     public static final String PROPERTY_REG_ID = "registration_id";
