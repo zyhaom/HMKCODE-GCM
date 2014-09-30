@@ -132,7 +132,7 @@ public class MainActivity extends Activity {
 
                     message = "Device registered, registration.\n\n" + regId;
 
-                    // TODO: Send regId to server.
+                    sendRegistrationIdToServer();
 
                     storeRegistrationId(context, regId);
 
@@ -149,6 +149,10 @@ public class MainActivity extends Activity {
                 textViewRegId.setText(message);
             }
         }.execute(null, null, null);
+    }
+
+    private void sendRegistrationIdToServer() {
+        // TODO: All this stuff.
     }
 
     /**
