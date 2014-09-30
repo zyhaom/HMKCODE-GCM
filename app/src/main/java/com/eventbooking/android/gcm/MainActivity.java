@@ -4,8 +4,20 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
+
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 public class MainActivity extends Activity {
+    Button buttonRegId;
+    EditText editTextRegId;
+
+    GoogleCloudMessaging gcm;
+
+    String regId;
+
+    String PROJECT_NUMBER = "393260886080";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
