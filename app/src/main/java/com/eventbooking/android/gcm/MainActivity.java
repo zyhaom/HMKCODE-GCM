@@ -18,12 +18,17 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends Activity {
     public static final String TAG = "GCM";
@@ -171,14 +176,14 @@ public class MainActivity extends Activity {
                 String postUrl = serverUrl + "/Device/Register";
 
                 try {
-                    StringEntity registrationIdEntity = new StringEntity(regId);
-                    StringEntity emailEntity = new StringEntity(email);
-
                     HttpClient client = new DefaultHttpClient();
                     HttpPost post = new HttpPost(postUrl);
 
-                    post.setEntity(registrationIdEntity);
-                    post.setEntity(emailEntity);
+                    List<NameValuePair> postBody = new ArrayList<NameValuePair>(2);
+                    postBody.add(new BasicNameValuePair("registrationId", regId));
+                    postBody.add(new BasicNameValuePair("email", email));
+
+                    post.setEntity(new UrlEncodedFormEntity(postBody));
 
                     Log.i(TAG, "Sending POST to " + postUrl);
 
