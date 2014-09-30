@@ -15,13 +15,9 @@ import java.io.IOException;
 
 public class MainActivity extends Activity {
     public static final String TAG = "GCM";
-
     private EditText editTextRegId;
-
     private GoogleCloudMessaging gcm;
-
     private String regId;
-
     private String PROJECT_NUMBER = "393260886080";
 
     @Override
