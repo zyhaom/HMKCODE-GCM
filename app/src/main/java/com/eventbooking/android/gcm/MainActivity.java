@@ -163,16 +163,18 @@ public class MainActivity extends Activity {
     }
 
     private void sendRegistrationIdToServer() {
-        // TODO: All this stuff.
-
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... params) {
-                HttpClient client = new DefaultHttpClient();
-                HttpPost post = new HttpPost(serverUrl + "/" + regId + "/" + email);
                 String message;
+                String postUrl = serverUrl + "/Device/Register/" + regId + "/" + email;
+
+                HttpClient client = new DefaultHttpClient();
+                HttpPost post = new HttpPost(postUrl);
 
                 try {
+                    Log.i(TAG, "Sending POST to " + postUrl);
+
                     HttpResponse response = client.execute(post);
 
                     message = response.getStatusLine().toString();
