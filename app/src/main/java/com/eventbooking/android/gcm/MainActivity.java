@@ -81,7 +81,13 @@ public class MainActivity extends Activity {
      * @param view The button.
      */
     public void onClick(View view) {
-        registerInBackground();
+        regId = getRegId(context);
+
+        if (regId.isEmpty()) {
+            registerInBackground();
+        } else {
+            editTextRegId.setText("Device already registered, registration ID = " + regId + "\n");
+        }
     }
 
     /**
