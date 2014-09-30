@@ -12,10 +12,9 @@
         android:text="@string/button_get_reg_id"
         android:onClick="onClick"/>
 
-    <EditText
+    <TextView
         android:id="@+id/editTextRegId"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:inputType="text"/>
+        android:layout_height="250dp"/>
 
 </LinearLayout>

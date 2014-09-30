@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -21,7 +22,7 @@ import java.io.IOException;
 
 public class MainActivity extends Activity {
     public static final String TAG = "GCM";
-    private EditText editTextRegId;
+    private TextView textViewRegId;
     private GoogleCloudMessaging gcm;
     private String regId;
     private final static String PROJECT_NUMBER = "393260886080";
@@ -35,7 +36,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        editTextRegId = (EditText) findViewById(R.id.editTextRegId);
+        textViewRegId = (TextView) findViewById(R.id.editTextRegId);
         context = getApplicationContext();
 
         if (GooglePlayServicesIsAvailable()) {
@@ -86,7 +87,7 @@ public class MainActivity extends Activity {
         if (regId.isEmpty()) {
             registerInBackground();
         } else {
-            editTextRegId.setText("Device already registered, registration ID = " + regId + "\n");
+            textViewRegId.setText("Device already registered.\n\n" + regId);
         }
     }
 
@@ -130,7 +131,7 @@ public class MainActivity extends Activity {
 
                     regId = gcm.register(PROJECT_NUMBER);
 
-                    message = "Device registered, registration ID = " + regId;
+                    message = "Device registered, registration.\n\n" + regId;
 
                     // TODO: Send regId to server.
 
@@ -146,7 +147,7 @@ public class MainActivity extends Activity {
 
             @Override
             protected void onPostExecute(String message) {
-                editTextRegId.setText(message + "\n");
+                textViewRegId.setText(message);
             }
         }.execute(null, null, null);
     }
