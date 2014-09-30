@@ -46,10 +46,18 @@ public class MainActivity extends Activity {
         return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Click handler for buttonGetRegId.
+     *
+     * @param view The button.
+     */
     public void onClick(View view) {
         getRegId();
     }
 
+    /**
+     * Gets the registration ID from the GCM server.
+     */
     public void getRegId() {
         new AsyncTask<Void, Void, String>() {
             @Override
