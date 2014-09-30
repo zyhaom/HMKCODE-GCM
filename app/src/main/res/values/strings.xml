@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">HMKCODE-GCM</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="button_get_registration_id">Get Registration ID</string>
 
 </resources>
