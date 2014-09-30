@@ -17,7 +17,11 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class MainActivity extends Activity {
     public static final String TAG = "GCM";
@@ -29,6 +33,7 @@ public class MainActivity extends Activity {
     private Context context;
     public static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
+    private static final String email = "clamm@eventbooking.com";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +50,9 @@ public class MainActivity extends Activity {
 
             if (regId.isEmpty()) {
                 registerInBackground();
+            } else {
+                sendRegistrationIdToServer();
+                textViewRegId.setText("Device already registered.\n\n" + regId);
             }
         } else {
             Log.i(TAG, "No valid Google Play Services APK found.");
@@ -86,6 +94,7 @@ public class MainActivity extends Activity {
         if (regId.isEmpty()) {
             registerInBackground();
         } else {
+            sendRegistrationIdToServer();
             textViewRegId.setText("Device already registered.\n\n" + regId);
         }
     }
@@ -153,6 +162,8 @@ public class MainActivity extends Activity {
 
     private void sendRegistrationIdToServer() {
         // TODO: All this stuff.
+
+
     }
 
     /**
