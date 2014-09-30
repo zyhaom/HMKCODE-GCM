@@ -6,6 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.WakefulBroadcastReceiver;
 
+/**
+ * This class receives the GCM message and passes it to GcmMessageHandler.
+ */
 public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
     @Override public void onReceive(Context context, Intent intent) {
         // Explicitly specify that GcmMessageHandler will handle the intent.
