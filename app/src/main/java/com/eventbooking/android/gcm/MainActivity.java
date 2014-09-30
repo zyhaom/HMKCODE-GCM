@@ -17,11 +17,12 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
-import java.io.BufferedInputStream;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 public class MainActivity extends Activity {
     public static final String TAG = "GCM";
@@ -33,6 +34,7 @@ public class MainActivity extends Activity {
     private Context context;
     public static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
+    private static final String serverUrl = "http://10.100.0.31:4000";
     private static final String email = "clamm@eventbooking.com";
 
     @Override
@@ -163,7 +165,32 @@ public class MainActivity extends Activity {
     private void sendRegistrationIdToServer() {
         // TODO: All this stuff.
 
+        new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... params) {
+                HttpClient client = new DefaultHttpClient();
+                HttpPost post = new HttpPost(serverUrl + "/" + regId + "/" + email);
+                String message;
 
+                try {
+                    HttpResponse response = client.execute(post);
+
+                    message = response.getStatusLine().toString();
+
+                    Log.i(TAG, message);
+                } catch (IOException e) {
+                    message = "Error: " + e.getMessage();
+                }
+
+                return message;
+            }
+
+            @Override
+            protected void onPostExecute(String message) {
+                String currentContent = textViewRegId.getText().toString();
+                textViewRegId.setText(currentContent + "\n\n" + message);
+            }
+        }.execute(null, null, null);
     }
 
     /**
