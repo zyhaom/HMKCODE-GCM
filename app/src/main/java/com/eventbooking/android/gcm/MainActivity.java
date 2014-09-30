@@ -126,6 +126,8 @@ public class MainActivity extends Activity {
 
                     message = "Device registered, registration ID = " + regId;
 
+                    // TODO: Send regId to server.
+
                     storeRegistrationId(context, regId);
 
                     Log.i(TAG, message);
